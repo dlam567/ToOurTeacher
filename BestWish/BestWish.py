@@ -16,15 +16,24 @@ from PIL import Image
 '''
 鼠标点击tkinter窗口任意位置进行拖动
 '''
-data = pd.read_excel('file/massage.xlsx')
-
-winview = data['窗口大小'].values[0]
-show = data['是否显示'].values[0]
-item = data['显示第几项'].values[0]
-fS = data['字号'].values[0]
-ft = data['字体'].values[0]
-item = int(item)
-mess = data['消息'].values[item]
+try:
+    data = pd.read_excel('file/message.xlsx')
+    winview = data['窗口大小'].values[0]
+    show = data['是否显示'].values[0]
+    item = data['显示第几项'].values[0]
+    fS = data['字号'].values[0]
+    ft = data['字体'].values[0]
+    item = int(item)
+    mess = data['消息'].values[item]
+except:
+    
+    root = tk.Tk()
+    root.withdraw()
+    messagebox.showinfo("提示", "没有检测到message.xlsx, 无法显示消息")
+    # root.mainloop()
+    root.destroy()
+    winview = '1030x600+100+100'
+    show = 0
 
 
 class uGUIHandler:
@@ -142,6 +151,7 @@ class uGUIHandler:
                 buttonStop['state'] = 'disable'
                 musicName.set('暂时没有播放音乐...')
                 pygame.mixer.music.stop()
+                print('停止')
                 pause_resume.set('播放')
 
         def closeWindow():
